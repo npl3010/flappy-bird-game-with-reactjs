@@ -1,0 +1,23 @@
+.fb-pipe-wrapper {
+    display: inline-block;
+
+    .fb-pipe {
+        width: auto;
+        height: 200px;
+        background: none;
+        overflow: hidden;
+
+        &.at-top {
+            position: absolute;
+            top: 0;
+            left: 150px;
+            transform: scaleX(-1) rotate(180deg);
+        }
+
+        &.at-bottom {
+            position: absolute;
+            top: 300px;
+            left: 150px;
+        }
+    }
+}
