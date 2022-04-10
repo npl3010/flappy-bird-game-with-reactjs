@@ -1,0 +1,40 @@
+// Navigation menu:
+$navmenu-btn-bgcolor: #fff;
+$navmenu-btn-bgcolor-active: steelblue;
+$navmenu-btn-txtcolor: steelblue;
+$navmenu-btn-txtcolor-active: #fff;
+
+.nav-menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    &__btn {
+        background: $navmenu-btn-bgcolor;
+        color: $navmenu-btn-txtcolor;
+        border-right: 1px solid #eee;
+        cursor: pointer;
+        text-transform: uppercase;
+
+        > a {
+            padding: 10px 30px;
+            display: inline-block;
+            color: $navmenu-btn-txtcolor;
+            fill: $navmenu-btn-txtcolor;
+            text-decoration: none;
+        }
+    }
+
+    &__btn.active {
+        background: $navmenu-btn-bgcolor-active;
+        color: $navmenu-btn-txtcolor-active;
+
+        > a {
+            color: $navmenu-btn-txtcolor-active;
+            fill: $navmenu-btn-txtcolor-active;
+        }
+    }
+}
