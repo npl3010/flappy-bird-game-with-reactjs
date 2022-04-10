@@ -11,14 +11,15 @@ export const BirdImage = styledComponents.img`
 `;
 
 function Bird(props) {
-    const { yPos, transitionFlyUpMs } = useSelector((state) => state.bird);
+    const { yPos, rotate, transitionFlyUpMs, transitionRotateMs } = useSelector((state) => state.bird);
 
     return (
         <div
             className='fb-bird-wrapper'
             style={{
                 top: `${yPos}px`,
-                transitionDuration: `${transitionFlyUpMs}ms`
+                transform: `rotate(${rotate}deg)`,
+                transition: `top ${transitionFlyUpMs}ms ease, transform ${transitionRotateMs}ms ease`
             }}
         >
             <div className='fb-bird'>
