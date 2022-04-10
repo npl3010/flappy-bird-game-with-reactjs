@@ -1,8 +1,11 @@
 .fb-bird-wrapper {
     display: inline-block;
     position: absolute;
-    top: 50%;
+    top: 250px;
     left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 1;
+    transition: top 0.5s ease;
 
     .fb-bird {
         width: auto;
