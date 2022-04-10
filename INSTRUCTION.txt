@@ -1,0 +1,26 @@
+****************************************************************************************************
+1. (.editorconfig):
+- Create a file called ".editorconfig".
+- Install 'EditorConfig for VS Code' extension if you are using VS Code.
+
+
+****************************************************************************************************
+2. Use Absolute Import instead of Relative Import:
+- Why? Because:
+    + By default, relative paths are the supported way of importing modules:
+        import MyModule from './MyModule';
+    + But what if you have a complex folder structure and want to go up in it?
+        import MyModule from '../../../components/MyModule'; // This is ugly!
+
+- To use Absolute Import in React project, we can:
+configure a jsconfig.json (for JavaScript projects).
+configure a tsconfig.json (for TypeScript projects).
+
+- Open configuration file:
+    + Configure the 'baseUrl' setting inside the 'compilerOptions':
+        {
+            "compilerOptions": {
+                "baseUrl": "src"
+            },
+            "include": ["src"]
+        }
