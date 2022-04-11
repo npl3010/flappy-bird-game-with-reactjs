@@ -6,7 +6,9 @@ import { createSlice } from '@reduxjs/toolkit';
  * }
  */
 const initialState = {
-    gameState: 'stopped'
+    gameState: 'stopped',
+    gameWidth: 350,
+    gameHeight: 500
 };
 
 const fbgameSlice = createSlice({

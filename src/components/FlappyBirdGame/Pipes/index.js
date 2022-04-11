@@ -12,6 +12,9 @@ function Pipes(props) {
         countPairsOfPipes,
         firstPairOfPipesToBeShown
     } = useSelector((state) => state.pipe);
+    const {
+        gameWidth
+    } = useSelector((state) => state.fbGame);
 
     const generatePipeList = () => {
         const pipeList = [];
@@ -39,7 +42,7 @@ function Pipes(props) {
                             height: pipeHeight ? `${pipeHeight}px` : '',
                             top: '0',
                             left: `${cssLeft}px`,
-                            transition: cssLeft > 350 ? 'none' : `left 0.5s linear`
+                            transition: cssLeft > gameWidth ? 'none' : `left 0.5s linear`
                         }}
                     >
                         <img src={pipeGreen} alt='pipe-at-top' />
@@ -51,7 +54,7 @@ function Pipes(props) {
                             height: pipeHeight ? `${pipeHeight}px` : '',
                             top: distanceTopPipeAndBottomPipe ? `${pipeHeight + distanceTopPipeAndBottomPipe}px` : '',
                             left: `${cssLeft}px`,
-                            transition: cssLeft > 350 ? 'none' : `left 0.5s linear`
+                            transition: cssLeft > gameWidth ? 'none' : `left 0.5s linear`
                         }}
                     >
                         <img src={pipeGreen} alt='pipe-at-bottom' />

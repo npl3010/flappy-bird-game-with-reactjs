@@ -12,7 +12,7 @@ import './index.scss'
 function FlappyBirdGame(props) {
     const timeoutIdToLetBirdFall = useRef(null);
     const intervalIdForBirdFlyDown = useRef(null);
-    const { gameState } = useSelector((state) => state.fbGame);
+    const { gameState, gameWidth, gameHeight } = useSelector((state) => state.fbGame);
     const { transitionFlyUpMs } = useSelector((state) => state.bird);
     const dispatch = useDispatch();
 
@@ -69,7 +69,7 @@ function FlappyBirdGame(props) {
 
     return (
         <div className='flappy-bird-game'>
-            <GameContainer>
+            <GameContainer $customWidth={`${gameWidth}px`} $customHeight={`${gameHeight}px`}>
                 <Bird></Bird>
                 <Pipes></Pipes>
                 <Foreground></Foreground>
