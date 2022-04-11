@@ -1,4 +1,4 @@
-.fb-pipe-wrapper {
+.fb-pair-of-pipes {
     display: inline-block;
 
     .fb-pipe {
@@ -6,6 +6,7 @@
         height: 200px;
         background: none;
         overflow: hidden;
+        transition: left 0.5s linear;
 
         &.at-top {
             position: absolute;

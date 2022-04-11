@@ -14,9 +14,14 @@ const birdSlice = createSlice({
     initialState,
     reducers: {
         letBirdFlyUp(state) {
-            if (state.yPos - 50 >= 0) {
-                state.yPos = state.yPos - 50;
-                state.rotate = -30;
+            if (state.yPos > 0) {
+                if (state.yPos - 50 >= 0) {
+                    state.yPos = state.yPos - 50;
+                    state.rotate = -30;
+                } else {
+                    state.yPos = 0;
+                    state.rotate = -30;
+                }
             }
         },
         letBirdFlyDown(state) {

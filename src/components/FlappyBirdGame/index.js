@@ -2,13 +2,15 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startGame } from 'features/fbgame/fbgameSlice';
 import { letBirdFlyDown, letBirdFlyUp } from 'features/fbgame/birdSlice';
+import { movePipeToLeft } from 'features/fbgame/pipeSlice';
 import { GameContainer } from './styles';
 import Bird from './Bird';
-import Pipe from './Pipe';
+import Pipes from './Pipes';
 import Foreground from './Foreground';
 import './index.scss'
 
 function FlappyBirdGame(props) {
+    const timeoutIdToLetBirdFall = useRef(null);
     const intervalIdForBirdFlyDown = useRef(null);
     const { gameState } = useSelector((state) => state.fbGame);
     const { transitionFlyUpMs } = useSelector((state) => state.bird);
@@ -19,17 +21,29 @@ function FlappyBirdGame(props) {
     }, [dispatch]);
 
     const letBirdFly = useCallback(() => {
+        clearTimeout(timeoutIdToLetBirdFall.current);
         clearInterval(intervalIdForBirdFlyDown.current);
+
         // The bird flies up:
         dispatch(letBirdFlyUp());
+        dispatch(movePipeToLeft());
+
         // The bird flies down:
-        intervalIdForBirdFlyDown.current = setInterval(() => {
+        timeoutIdToLetBirdFall.current = setTimeout(() => {
             dispatch(letBirdFlyDown());
+            dispatch(movePipeToLeft());
+
+            intervalIdForBirdFlyDown.current = setInterval(() => {
+                dispatch(letBirdFlyDown());
+                dispatch(movePipeToLeft());
+            }, 150);
         }, transitionFlyUpMs);
+
     }, [dispatch, transitionFlyUpMs]);
 
     useEffect(() => {
         return () => {
+            clearTimeout(timeoutIdToLetBirdFall.current);
             clearInterval(intervalIdForBirdFlyDown.current);
         };
     }, [intervalIdForBirdFlyDown]);
@@ -57,7 +71,7 @@ function FlappyBirdGame(props) {
         <div className='flappy-bird-game'>
             <GameContainer>
                 <Bird></Bird>
-                <Pipe></Pipe>
+                <Pipes></Pipes>
                 <Foreground></Foreground>
             </GameContainer>
         </div>
