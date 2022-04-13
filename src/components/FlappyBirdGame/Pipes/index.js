@@ -5,7 +5,9 @@ import pipeGreen from 'assets/flappy-bird-game/pipe/v2-pipe-green.png';
 
 function Pipes(props) {
     const {
-        pipeHeight,
+        pipeDataList,
+        pipeWidth,
+        pipeHeightTop,
         xPos,
         distanceTopPipeAndBottomPipe,
         distanceLeftPipeAndRightPipe,
@@ -23,6 +25,8 @@ function Pipes(props) {
 
         for (let i = 0; i < countPairsOfPipes; i++) {
             let cssLeft = 0;
+            const topHeightDefault = pipeHeightTop ? pipeHeightTop : 200;
+            const topHeight = pipeDataList[i]?.topHeight ? pipeDataList[i].topHeight : topHeightDefault;
             if (i === firstPairOfPipesToBeShown) {
                 cssLeft = currentLeftOfFirstDisplayedItem;
             }
@@ -39,7 +43,8 @@ function Pipes(props) {
                     <div
                         className='fb-pipe at-top'
                         style={{
-                            height: pipeHeight ? `${pipeHeight}px` : '',
+                            width: pipeWidth ? `${pipeWidth}px` : '',
+                            height: `${topHeight}px`,
                             top: '0',
                             left: `${cssLeft}px`,
                             transition: cssLeft > gameWidth ? 'none' : `left 0.5s linear`
@@ -51,8 +56,9 @@ function Pipes(props) {
                     <div
                         className='fb-pipe at-bottom'
                         style={{
-                            height: pipeHeight ? `${pipeHeight}px` : '',
-                            top: distanceTopPipeAndBottomPipe ? `${pipeHeight + distanceTopPipeAndBottomPipe}px` : '',
+                            width: pipeWidth ? `${pipeWidth}px` : '',
+                            height: `auto`,
+                            top: distanceTopPipeAndBottomPipe ? `${topHeight + distanceTopPipeAndBottomPipe}px` : '',
                             left: `${cssLeft}px`,
                             transition: cssLeft > gameWidth ? 'none' : `left 0.5s linear`
                         }}
