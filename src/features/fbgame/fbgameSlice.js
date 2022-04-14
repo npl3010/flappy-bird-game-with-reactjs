@@ -18,10 +18,14 @@ const fbgameSlice = createSlice({
         startGame(state) {
             state.gameState = 'playing';
         },
+        stopGame(state) {
+            state.gameState = 'stopped';
+        },
     },
 });
 
 export const {
     startGame,
+    stopGame
 } = fbgameSlice.actions;
 export default fbgameSlice.reducer;

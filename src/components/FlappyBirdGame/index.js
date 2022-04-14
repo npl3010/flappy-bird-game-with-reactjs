@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { startGame } from 'features/fbgame/fbgameSlice';
-import { letBirdFlyDown, letBirdFlyUp } from 'features/fbgame/birdSlice';
+import { startGame, stopGame } from 'features/fbgame/fbgameSlice';
+import { letBirdFlyDown, letBirdFlyUp, setBirdXPos } from 'features/fbgame/birdSlice';
 import { generatePipeList, movePipesToLeft } from 'features/fbgame/pipeSlice';
 import { GameContainer } from './styles';
 import Bird from './Bird';
@@ -13,9 +13,20 @@ function FlappyBirdGame(props) {
     const timeoutIdToLetBirdFall = useRef(null);
     const intervalIdForBirdFlyDown = useRef(null);
     const { gameState, gameWidth, gameHeight } = useSelector((state) => state.fbGame);
-    const { transitionFlyUpMs, yPos: birdYPos } = useSelector((state) => state.bird);
-    const { xPos: pipeXPos } = useSelector((state) => state.bird);
+    const { transitionFlyUpMs, birdWidth } = useSelector((state) => state.bird);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (gameWidth) {
+            dispatch(setBirdXPos((gameWidth / 2) - (birdWidth / 2)));
+        }
+    }, [dispatch, gameWidth, birdWidth]);
+
+    const stopPlaying = useCallback(() => {
+        dispatch(stopGame());
+        clearTimeout(timeoutIdToLetBirdFall.current);
+        clearInterval(intervalIdForBirdFlyDown.current);
+    }, [dispatch]);
 
     const startPlaying = useCallback(() => {
         dispatch(startGame());
@@ -43,17 +54,6 @@ function FlappyBirdGame(props) {
 
     }, [dispatch, transitionFlyUpMs]);
 
-    const checkIfShouldEndGame = () => {
-        /**
-         * Bird's coordinates:
-         */
-        // birdYPos
-
-        /**
-         * Pipes' coordinates:
-         */
-    };
-
     useEffect(() => {
         return () => {
             clearTimeout(timeoutIdToLetBirdFall.current);
@@ -67,7 +67,7 @@ function FlappyBirdGame(props) {
                 e.preventDefault();
                 letBirdFly();
 
-                if (gameState === 'stopped') {
+                if (gameState !== 'playing') {
                     startPlaying();
                 }
             }
@@ -83,7 +83,7 @@ function FlappyBirdGame(props) {
     return (
         <div className='flappy-bird-game'>
             <GameContainer $customWidth={`${gameWidth}px`} $customHeight={`${gameHeight}px`}>
-                <Bird></Bird>
+                <Bird stopPlaying={stopPlaying}></Bird>
                 <Pipes></Pipes>
                 <Foreground></Foreground>
             </GameContainer>
